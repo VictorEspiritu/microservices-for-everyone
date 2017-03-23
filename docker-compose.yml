@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    mysql:
+        image: mysql:5.7
+        environment:
+            MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+            MYSQL_DATABASE: app
+
+    mutable_state:
+        image: microservices-for-everyone/persistence_base
+        build: docker/base/
+        volumes:
+            - ./:/opt
+        command: php src/MutableState/client.php
+        depends_on:
+            - mysql

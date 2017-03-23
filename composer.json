@@ -1,0 +1,14 @@
+{
+    "require": {
+        "beberlei/assert": "^2.7",
+        "symfony/var-dumper": "^3.2",
+        "doctrine/dbal": "^2.5",
+        "matthiasnoback/php-workshop-tools": "^0.3.2",
+        "webmozart/console": "~1.0@beta"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
+}
