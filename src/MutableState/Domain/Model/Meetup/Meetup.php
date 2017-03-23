@@ -18,9 +18,9 @@ final class Meetup
         return new self($provisionalDate);
     }
 
-    public function reschedule(string $scheduledDate): void
+    public function reschedule(string $newDate): void
     {
-        $this->scheduledDate = $scheduledDate;
+        $this->scheduledDate = $newDate;
     }
 
     public function id(): int

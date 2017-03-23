@@ -33,12 +33,12 @@ final class DataMapper
                 $table = $this->tableNameForEntity($entity);
                 $data = $this->extractData($entity);
 
-                $this->connection->update($table, $data, ['id' => $data['id']]);
+                $this->connection->update($table, $data, ['meetupId' => $data['meetupId']]);
             }
 
             foreach ($this->newEntities as $entity) {
                 // set the auto-incremented ID
-                $idProperty = new \ReflectionProperty($entity, 'id');
+                $idProperty = new \ReflectionProperty($entity, 'meetupId');
                 $idProperty->setAccessible(true);
                 $idProperty->setValue($entity, count($this->managedEntities) + 1);
 

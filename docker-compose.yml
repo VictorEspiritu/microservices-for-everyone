@@ -17,3 +17,9 @@ services:
         command: php src/MutableState/client.php
         depends_on:
             - mysql
+
+    event_sourcing:
+        image: microservices-for-everyone/persistence_base
+        volumes:
+            - ./:/opt
+        command: php src/EventSourcing/client.php
