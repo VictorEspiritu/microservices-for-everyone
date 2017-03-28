@@ -8,18 +8,18 @@ final class MeetupRescheduled
     private $meetupId;
     private $newDate;
 
-    public function __construct(int $meetupId, string $newDate)
+    public function __construct(MeetupId $meetupId, ScheduledDate $newDate)
     {
         $this->meetupId = $meetupId;
         $this->newDate = $newDate;
     }
 
-    public function meetupId(): int
+    public function meetupId(): MeetupId
     {
         return $this->meetupId;
     }
 
-    public function newDate(): string
+    public function newDate(): ScheduledDate
     {
         return $this->newDate;
     }

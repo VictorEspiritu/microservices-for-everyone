@@ -4,7 +4,8 @@
         "symfony/var-dumper": "^3.2",
         "doctrine/dbal": "^2.5",
         "matthiasnoback/php-workshop-tools": "^0.3.2",
-        "webmozart/console": "~1.0@beta"
+        "webmozart/console": "~1.0@beta",
+        "datastax/php-driver": "^1.2"
     },
     "autoload": {
         "psr-4": {

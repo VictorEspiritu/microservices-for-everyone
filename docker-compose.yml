@@ -23,3 +23,34 @@ services:
         volumes:
             - ./:/opt
         command: php src/EventSourcing/client.php
+
+    cassandra:
+        image: cassandra
+
+    cassandra2:
+        image: cassandra
+        depends_on:
+            - cassandra
+        environment:
+            CASSANDRA_SEEDS: cassandra
+
+    cassandra3:
+        image: cassandra
+        depends_on:
+            - cassandra
+        environment:
+            CASSANDRA_SEEDS: cassandra
+
+    cqlsh:
+        image: cassandra
+        command: cqlsh cassandra
+        depends_on:
+            - cassandra
+
+    distributed_storage:
+        image: microservices-for-everyone/persistence_base
+        volumes:
+            - ./:/opt
+        command: php src/DistributedStorage/client.php
+        depends_on:
+            - cassandra

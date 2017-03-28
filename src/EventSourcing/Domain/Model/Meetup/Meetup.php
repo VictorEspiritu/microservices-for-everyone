@@ -12,9 +12,10 @@ final class Meetup
 
     private function __construct()
     {
+        // only allow controlled construction
     }
 
-    public static function schedule(int $id, string $provisionalDate): Meetup
+    public static function schedule(MeetupId $id, ScheduledDate $provisionalDate): Meetup
     {
         $meetup = new self();
         $meetup->recordThat(new MeetupScheduled($id, $provisionalDate));
@@ -33,8 +34,12 @@ final class Meetup
         return $meetup;
     }
 
-    public function reschedule(string $newDate): void
+    public function reschedule(ScheduledDate $newDate): void
     {
+        if ($newDate === $this->scheduledDate) {
+            return;
+        }
+
         $this->recordThat(new MeetupRescheduled($this->id, $newDate));
     }
 
