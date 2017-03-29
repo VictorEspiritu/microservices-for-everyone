@@ -51,14 +51,14 @@ final class DataMapper
     private function performInserts()
     {
         foreach ($this->newEntities as $entity) {
-            // set the auto-incremented ID
-            $idProperty = new \ReflectionProperty($entity, 'id');
-            $idProperty->setAccessible(true);
-            $idProperty->setValue($entity, count($this->managedEntities) + 1);
-
             $table = $this->tableNameForEntity($entity);
             $data = $this->extractData($entity);
             $this->connection->insert($table, $data);
+
+            // set the auto-incremented ID
+            $idProperty = new \ReflectionProperty($entity, 'id');
+            $idProperty->setAccessible(true);
+            $idProperty->setValue($entity, (int)$this->connection->lastInsertId());
         }
     }
 

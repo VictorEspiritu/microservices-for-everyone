@@ -11,7 +11,8 @@ final class MeetupsSchemaDefinition implements SchemaDefinition
     public function define(Schema $schema)
     {
         $table = $schema->createTable('Meetup');
-        $table->addColumn('id', 'string');
+        $table->addColumn('id', 'integer')->setAutoincrement(true);
+        $table->setPrimaryKey(['id']);
         $table->addColumn('scheduledDate', 'string');
     }
 }
