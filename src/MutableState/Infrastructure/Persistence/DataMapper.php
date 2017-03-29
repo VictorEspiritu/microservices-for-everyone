@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace MutableState\Infrastructure\Persistence;
 
 use Doctrine\DBAL\Connection;
-use Doctrine\DBAL\Schema\Table;
 
 final class DataMapper
 {
@@ -28,46 +27,44 @@ final class DataMapper
 
     public function flush()
     {
-        $this->connection->transactional(function (Connection $connection) {
-            foreach ($this->managedEntities as $entity) {
-                $table = $this->tableNameForEntity($entity);
-                $data = $this->extractData($entity);
-
-                $this->connection->update($table, $data, ['meetupId' => $data['meetupId']]);
-            }
+        $this->connection->transactional(function () {
+            $this->performInserts();
+            $this->performUpdates();
 
             foreach ($this->newEntities as $entity) {
-                // set the auto-incremented ID
-                $idProperty = new \ReflectionProperty($entity, 'meetupId');
-                $idProperty->setAccessible(true);
-                $idProperty->setValue($entity, count($this->managedEntities) + 1);
-
-                $table = $this->tableNameForEntity($entity);
-                $data = $this->extractData($entity);
-                $this->createTableIfNotExists($table, array_keys($data));
-                $connection->insert($table, $data);
                 unset($this->newEntities[$this->objectHash($entity)]);
                 $this->managedEntities[$this->objectHash($entity)] = $entity;
             }
         });
     }
 
+    private function performUpdates()
+    {
+        foreach ($this->managedEntities as $entity) {
+            $table = $this->tableNameForEntity($entity);
+            $data = $this->extractData($entity);
+
+            $this->connection->update($table, $data, ['id' => $data['id']]);
+        }
+    }
+
+    private function performInserts()
+    {
+        foreach ($this->newEntities as $entity) {
+            // set the auto-incremented ID
+            $idProperty = new \ReflectionProperty($entity, 'id');
+            $idProperty->setAccessible(true);
+            $idProperty->setValue($entity, count($this->managedEntities) + 1);
+
+            $table = $this->tableNameForEntity($entity);
+            $data = $this->extractData($entity);
+            $this->connection->insert($table, $data);
+        }
+    }
+
     private function objectHash($entity): string
     {
         return spl_object_hash($entity);
-    }
-
-    private function createTableIfNotExists(string $tableName, array $columnNames)
-    {
-        if ($this->connection->getSchemaManager()->tablesExist([$tableName])) {
-            return;
-        }
-
-        $table = new Table($tableName);
-        foreach ($columnNames as $columnName) {
-            $table->addColumn($columnName, 'string');
-        }
-        $this->connection->getSchemaManager()->createTable($table);
     }
 
     private function tableNameForEntity($entity): string

@@ -1,9 +1,11 @@
 <?php
 
 use Cassandra\SimpleStatement;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
+$output = new ConsoleOutput();
 //ini_set('cassandra.log', 'cassandra.log');
 //ini_set('cassandra.log_level', 'TRACE');
 
@@ -35,7 +37,7 @@ foreach (explode(";\n", $schema) as $cql) {
         continue;
     }
 
-    echo $cql . "\n";
+    $output->writeln('<comment>' . $cql . '</comment>');
     $session->execute(new SimpleStatement($cql));
 }
 
@@ -43,4 +45,5 @@ echo <<<EOD
 Now run:
 
 docker-compose run cqlsh cqlsh cassandra -e "SELECT * FROM meetup_management.meetups;"
+
 EOD;

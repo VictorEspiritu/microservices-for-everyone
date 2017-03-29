@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7fc762f6f345b1b343de99954f23785",
+    "content-hash": "4937223e5a0c45fb2bae47e182c5d2c5",
     "packages": [
         {
             "name": "beberlei/assert",
@@ -667,6 +667,47 @@
                 }
             ],
             "time": "2017-03-16T12:44:40+00:00"
+        },
+        {
+            "name": "mnapoli/dbal-schema",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mnapoli/dbal-schema.git",
+                "reference": "7e66402ac0c32fbbf353083ad1ee92d7c010785c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mnapoli/dbal-schema/zipball/7e66402ac0c32fbbf353083ad1ee92d7c010785c",
+                "reference": "7e66402ac0c32fbbf353083ad1ee92d7c010785c",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.5",
+                "php": "^7.0",
+                "symfony/console": "^3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DbalSchema\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "DB schema manager for Doctrine DBAL",
+            "keywords": [
+                "db",
+                "dbal",
+                "doctrine",
+                "schema"
+            ],
+            "time": "2017-03-27T19:04:35+00:00"
         },
         {
             "name": "paragonie/random_compat",
