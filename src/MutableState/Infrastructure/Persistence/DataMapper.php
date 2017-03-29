@@ -43,8 +43,10 @@ final class DataMapper
         foreach ($this->managedEntities as $entity) {
             $table = $this->tableNameForEntity($entity);
             $data = $this->extractData($entity);
+            $id = $data['id'];
+            unset($data['id']);
 
-            $this->connection->update($table, $data, ['id' => $data['id']]);
+            $this->connection->update($table, $data, ['id' => $id]);
         }
     }
 
@@ -53,6 +55,7 @@ final class DataMapper
         foreach ($this->newEntities as $entity) {
             $table = $this->tableNameForEntity($entity);
             $data = $this->extractData($entity);
+            unset($data['id']);
             $this->connection->insert($table, $data);
 
             // set the auto-incremented ID

@@ -2,6 +2,7 @@
 
 use DbalSchema\DbalSchemaCommand;
 use Doctrine\DBAL\DriverManager;
+use Doctrine\DBAL\Logging\EchoSQLLogger;
 use MutableState\Domain\Model\Meetup\Meetup;
 use MutableState\Infrastructure\Persistence\DataMapper;
 use MutableState\Infrastructure\Persistence\MeetupsSchemaDefinition;
@@ -36,6 +37,7 @@ $connection = DriverManager::getConnection([
     'host' => 'mysql',
     'dbname' => 'app'
 ]);
+$connection->getConfiguration()->setSQLLogger(new EchoSQLLogger());
 
 $updateSchemaCommand = new DbalSchemaCommand($connection, new MeetupsSchemaDefinition());
 $updateSchemaCommand->purge(true, $output);
@@ -51,7 +53,7 @@ $allData = $connection->fetchAll('SELECT * FROM Meetup');
 $output->writeln('<section>After insert:</section>');
 printTable($allData, $output);
 
-$meetup->reschedule('2017-04-04 19:00');
+$meetup->reschedule('2017-04-04 20:00');
 
 $dataMapper->flush();
 

@@ -14,15 +14,34 @@ services:
         build: docker/base/
         volumes:
             - ./:/opt
-        command: php src/MutableState/client.php
+        command: php src/MutableState/run.php
         depends_on:
             - mysql
+
+    redis:
+        image: redis:3.2
+
+    sequence_server:
+        image: microservices-for-everyone/persistence_base
+        volumes:
+            - ./:/opt
+        command: php -S 0.0.0.0:80 -t src/Sequence/server/
+        depends_on:
+            - redis
+
+    sequence_client:
+        image: microservices-for-everyone/persistence_base
+        volumes:
+            - ./:/opt
+        command: php src/Sequence/client.php
+        depends_on:
+            - sequence_server
 
     event_sourcing:
         image: microservices-for-everyone/persistence_base
         volumes:
             - ./:/opt
-        command: php src/EventSourcing/client.php
+        command: php src/EventSourcing/run.php
 
     cassandra:
         image: cassandra
@@ -51,6 +70,6 @@ services:
         image: microservices-for-everyone/persistence_base
         volumes:
             - ./:/opt
-        command: php src/DistributedStorage/client.php
+        command: php src/DistributedStorage/run.php
         depends_on:
             - cassandra

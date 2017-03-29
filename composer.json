@@ -6,7 +6,9 @@
         "matthiasnoback/php-workshop-tools": "^0.3.2",
         "webmozart/console": "~1.0@beta",
         "datastax/php-driver": "^1.2",
-        "mnapoli/dbal-schema": "^0.2.1"
+        "mnapoli/dbal-schema": "^0.2.1",
+        "predis/predis": "^1.1",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "autoload": {
         "psr-4": {
