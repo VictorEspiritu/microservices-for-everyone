@@ -15,10 +15,14 @@ final class Meetup
         // only allow controlled construction
     }
 
-    public static function schedule(MeetupId $id, ScheduledDate $provisionalDate): Meetup
-    {
+    public static function schedule(
+        MeetupId $id,
+        ScheduledDate $provisionalDate
+    ): Meetup {
         $meetup = new self();
-        $meetup->recordThat(new MeetupScheduled($id, $provisionalDate));
+        $meetup->recordThat(
+            new MeetupScheduled($id, $provisionalDate)
+        );
 
         return $meetup;
     }
@@ -40,7 +44,9 @@ final class Meetup
             return;
         }
 
-        $this->recordThat(new MeetupRescheduled($this->id, $newDate));
+        $this->recordThat(
+            new MeetupRescheduled($this->id, $newDate)
+        );
     }
 
     public function recordedEvents(): array
@@ -64,14 +70,16 @@ final class Meetup
         }
     }
 
-    private function applyMeetupScheduledEvent(MeetupScheduled $event): void
-    {
+    private function applyMeetupScheduledEvent(
+        MeetupScheduled $event
+    ): void {
         $this->id = $event->meetupId();
         $this->scheduledDate = $event->provisionalDate();
     }
 
-    private function applyMeetupRescheduledEvent(MeetupRescheduled $event): void
-    {
+    private function applyMeetupRescheduledEvent(
+        MeetupRescheduled $event
+    ): void {
         $this->scheduledDate = $event->newDate();
     }
 }

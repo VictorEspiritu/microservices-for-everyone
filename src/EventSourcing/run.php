@@ -30,7 +30,7 @@ $output->writeln('<section>Reconstitute a Meetup</section>');
 $meetup = Meetup::reconstitute($events);
 
 $output->writeln('<section>Reschedule a Meetup</section>');
-$meetup->reschedule(ScheduledDate::fromString('2017-04-04 19:00'));
+$meetup->reschedule(ScheduledDate::fromString('2017-04-04 20:00'));
 
 $events = array_merge($events, $meetup->recordedEvents());
 

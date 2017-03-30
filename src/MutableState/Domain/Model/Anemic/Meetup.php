@@ -8,11 +8,6 @@ final class Meetup
     private $id;
     private $scheduledDate;
 
-    public function __construct(string $scheduledDate)
-    {
-        $this->scheduledDate = $scheduledDate;
-    }
-
     public function getId(): int
     {
         return $this->id;
