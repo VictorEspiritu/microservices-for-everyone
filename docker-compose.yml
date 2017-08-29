@@ -10,7 +10,7 @@ services:
             MYSQL_DATABASE: app
 
     mutable_state:
-        image: microservices-for-everyone/persistence_base
+        image: microservicesforeveryone/persistence_base
         build: docker/base/
         volumes:
             - ./:/opt
@@ -22,7 +22,7 @@ services:
         image: redis:3.2
 
     sequence_server:
-        image: microservices-for-everyone/persistence_base
+        image: microservicesforeveryone/persistence_base
         volumes:
             - ./:/opt
         command: php -S 0.0.0.0:80 -t src/Sequence/server/
@@ -30,7 +30,7 @@ services:
             - redis
 
     sequence_client:
-        image: microservices-for-everyone/persistence_base
+        image: microservicesforeveryone/persistence_base
         volumes:
             - ./:/opt
         command: php src/Sequence/client.php
@@ -38,7 +38,7 @@ services:
             - sequence_server
 
     event_sourcing:
-        image: microservices-for-everyone/persistence_base
+        image: microservicesforeveryone/persistence_base
         volumes:
             - ./:/opt
         command: php src/EventSourcing/run.php
@@ -67,7 +67,7 @@ services:
             - cassandra
 
     distributed_storage:
-        image: microservices-for-everyone/persistence_base
+        image: microservicesforeveryone/persistence_base
         volumes:
             - ./:/opt
         command: php src/DistributedStorage/run.php
